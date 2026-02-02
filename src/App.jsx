@@ -1,9 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
 import HomePage from './pages/Homepage'
 import ChiSiamo from './pages/ChiSiamo'
 import Prodotti from './pages/Prodotti'
-import Navbar from './components/Navbar'
 import DefaultLayout from './layout/DefaultLayout'
 
 function App() {

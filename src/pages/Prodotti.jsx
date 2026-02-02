@@ -23,13 +23,15 @@ useEffect(()=>{
     return(
     <>
             <h1>Prodotti</h1>
-
+            <div className="card_container">
             {products.map((product) => (
-                <div key={product.id}>
+                <div key={product.id} className="card">
                     <h2>{product.title}</h2>
-                    <p>{product.description}</p>
+                    <img src={product.image} alt={product.title} width="100" />
+                    <p>{product.price} €</p>
                 </div>
             ))}
+            </div>
     </>
     )
 }

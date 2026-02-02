@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 function DefaultLayout() {
     
     return (
-        <div>
+        <div className="boxed">
             <Header />
             <Outlet />
             <Footer />

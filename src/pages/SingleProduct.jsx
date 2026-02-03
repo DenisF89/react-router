@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function SingleProduct(){
-    const {id} = useParams();
+    const {id, category} = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState({});
+    const [categoryProducts, setCategoryProducts] = useState([]);
+
+    const index = categoryProducts.findIndex(p => p.id === Number(id));
 
     function getData(){
         if(isNaN(id) || id<=0 || id>20){
@@ -24,12 +27,31 @@ export default function SingleProduct(){
         getData();
     },[id])
 
+    useEffect(() => {
+    axios
+      .get(`https://fakestoreapi.com/products/category/${category}`)
+      .then(res => setCategoryProducts(res.data))
+      .catch(() => navigate("/prodotti"));
+  }, [category]);
+
     const nextProduct = () => {
-    navigate(`/prodotti/${Number(id) + 1}`);
+        if(category)
+            {if (index < categoryProducts.length - 1) {
+                const nextId = categoryProducts[index + 1].id;
+                navigate(`/prodotti/${category}/${nextId}`);
+            }else{navigate("/prodotti")}
+        }else{navigate(`/prodotti/${Number(id) + 1}`);}
     }
 
     const prevProduct = () => {
-      navigate(`/prodotti/${Number(id) - 1}`);
+        if(category)
+            {if (index > 0) {
+                const prevId = categoryProducts[index - 1].id;
+                navigate(`/prodotti/${category}/${prevId}`);
+            }else{navigate("/prodotti")}
+        }else{
+            navigate(`/prodotti/${Number(id) - 1}`);
+        }
     }
   
 

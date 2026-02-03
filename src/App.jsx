@@ -15,6 +15,7 @@ function App() {
           <Route path="/chi-siamo" Component={ChiSiamo} />
           <Route path="/prodotti" Component={Prodotti} />
           <Route path="/prodotti/:id" Component={SingleProduct} />
+          <Route path="/prodotti/:category/:id" Component={SingleProduct} />
         </Route>
       </Routes>
     </BrowserRouter>

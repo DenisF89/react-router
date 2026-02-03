@@ -7,9 +7,17 @@ function DefaultLayout() {
     
     return (
         <div className="boxed">
-            <Header />
-            <Outlet />
-            <Footer />
+            <header>
+                <Header />
+            </header>
+            
+            <main>
+                <Outlet />
+            </main>
+            
+            <footer>
+                <Footer />
+            </footer>
         </div>
     );
 }

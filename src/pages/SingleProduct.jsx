@@ -7,6 +7,7 @@ export default function SingleProduct(){
     const navigate = useNavigate();
     const [product, setProduct] = useState({});
     const [categoryProducts, setCategoryProducts] = useState([]);
+    const [open,setOpen] = useState(false);
 
     const index = categoryProducts.findIndex(p => p.id === Number(id));
 
@@ -25,6 +26,7 @@ export default function SingleProduct(){
 
     useEffect(()=>{
         getData();
+        setOpen(false);
     },[id])
 
     useEffect(() => {
@@ -53,12 +55,40 @@ export default function SingleProduct(){
             navigate(`/prodotti/${Number(id) - 1}`);
         }
     }
-  
 
+   const converti = (value)=>{
+        const result = value.toFixed(2).replace(".", ",");
+        return result;
+    }
+
+    const stars = (value) =>{
+        const white = Math.round(value);
+        const result = Array.from({ length:5},(_,i) => 
+            <span className={"rating "+(i < white ?"yellow":"")} key={i}>{i < white ? "★" : "☆"}</span>
+        )
+        return result;
+    }
+
+    const taglia = (text)=>{
+    if(!text)return;
+    
+    return (<>
+            <p className={`description ${open ? "d-open" : "d-closed"}`}>
+                {open ? text : text.slice(0, 160)}
+                {!open && text.length > 160 && "..."}
+            </p>
+            {text.length>160 && 
+                <button onClick={() => setOpen(!open)}>
+                {open ? "Close" : "More"}
+                </button>
+            }
+            </>
+        ) 
+    }
     
     return (
             <>
-                <h1>Dettagli Prodotto</h1>
+                {category && (<h2>Filtro: {category.toUpperCase()}</h2>)}
                 <p>Stai visualizzando il prodotto con ID: {id}</p>
 
                 <div className="single-container">
@@ -70,10 +100,11 @@ export default function SingleProduct(){
                         </div>
                         <div className="single-info">
                             <h2>{product.title}</h2>
-                            <p>Prezzo: {product.price} €</p>
-                            <p>{product.description}</p>
-                            <p>category: {product.category}</p>
-                            <p>rating: {product.rating?.rate}, {product.rating?.count} recensioni</p>
+                            {product.price &&
+                            <p>Prezzo: {converti(product.price)} €</p> }
+                            {taglia(product.description)}
+                            <p>rating: {stars(product.rating?.rate)}</p> 
+                            <p>{product.rating?.count} recensioni</p>
                         </div>
                     </div>
 

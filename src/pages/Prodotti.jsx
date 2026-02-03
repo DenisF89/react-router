@@ -7,7 +7,8 @@ function Prodotti(){
     const [products, setProducts] = useState([]);
     const [error, setError] = useState('');
     const [category, setCategory] = useState('');
-    const options = ["Tutti i prodotti",...new Set(products.map(product=>product.category))];
+    const options = ["Tutti i prodotti",
+                    ...new Set(products.map(product => product.category))];
     
 const apiUrl = "https://fakestoreapi.com/products";
 
@@ -27,6 +28,10 @@ const filtra = (e) => {
     else {setCategory(e.target.value);}
 }
 
+const converti= (value)=>{
+    const result = value.toFixed(2).replace(".", ",");
+    return result;
+}
 
 useEffect(()=>{
     getData();
@@ -56,7 +61,7 @@ useEffect(()=>{
                         <div className="image">
                             <img src={product.image} alt={product.title} />
                         </div>
-                        <p className="price">{product.price} €</p>
+                        <p className="price">{converti(product.price)} €</p>
                     </Link>
                 </div>
                 

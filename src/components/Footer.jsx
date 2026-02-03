@@ -1,8 +1,8 @@
 function Footer(){
     return(
-        <div>
+        <footer>
             @2026 Company Name. All rights reserved.
-        </div>
+        </footer>
     );
 }
 

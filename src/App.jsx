@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/Homepage'
 import ChiSiamo from './pages/ChiSiamo'
 import Prodotti from './pages/Prodotti'
+import SingleProduct from './pages/SingleProduct'
 import DefaultLayout from './layout/DefaultLayout'
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
         <Route Component={DefaultLayout}>
           <Route path="/" Component={HomePage} />
           <Route path="/chi-siamo" Component={ChiSiamo} />
-          <Route path="/prodotti" Component={Prodotti} /> 
+          <Route path="/prodotti" Component={Prodotti} />
+          <Route path="/prodotti/:id" Component={SingleProduct} />
         </Route>
       </Routes>
     </BrowserRouter>

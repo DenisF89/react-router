@@ -1,73 +1,41 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import Card from "../components/Card";
+import Filter from "../components/Filter";
+import { getData } from "../functions/functions.js"
 
 function Prodotti(){
 
+    //dichiarazioni variabili
     const [products, setProducts] = useState([]);
     const [error, setError] = useState('');
     const [category, setCategory] = useState('');
-    const options = ["Tutti i prodotti",
-                    ...new Set(products.map(product => product.category))];
-    
-const apiUrl = "https://fakestoreapi.com/products";
 
-function getData(){
-    axios.get(apiUrl)
-    .then((res)=>{
-        setProducts(res.data);
-    }).catch((err)=>{
-        setError("Errore nel caricamento dei prodotti");
-    })
-}
+    const url = "https://fakestoreapi.com/products";
 
-const filtra = (e) => {
-    if(e.target.value === "Tutti i prodotti"){
-        setCategory('');
-    }
-    else {setCategory(e.target.value);}
-}
-
-const converti= (value)=>{
-    const result = value.toFixed(2).replace(".", ",");
-    return result;
-}
-
-useEffect(()=>{
-    getData();
-},[])
-
-
+    //chiamata all'api
+    useEffect(()=>{getData(url, setProducts, setError)}, [])
 
     return(
-    <>
+        <>
             <h1>Prodotti</h1>
-            <div className="filter-bar">
-                <select value={category} onChange={filtra}>
-                    {options.map((option,i)=>
-                    <option key={i} value={option}>{option}</option>
-                    )}
-                </select>
-            </div>
+                <Filter category={category} 
+                        setCategory={setCategory} 
+                        products={products} 
+                />
+
             <div className="card_container">
-            {error!=""  ? <p className="error">{error}</p> 
-                        : (category?products.filter(product => product.category === category):products)
-                                            .map((product) => (
-                <div key={product.id} className="card">
-                    <Link to={`/prodotti/${category?`${category}/`:''}${product.id}`}>
-                        <div className="title">
-                            <h2>{product.title}</h2>
-                        </div>
-                        <div className="image">
-                            <img src={product.image} alt={product.title} />
-                        </div>
-                        <p className="price">{converti(product.price)} €</p>
-                    </Link>
-                </div>
-                
-            ))}
+                {error!=""  ? <p className="error">{error}</p> 
+                            : (category ?products.filter(product => product.category === category)
+                                        :products
+                              )         .map((product) =>   <Card 
+                                                                key={product.id} 
+                                                                category={category} 
+                                                                product={product}  
+                                                            />
+                                        )
+                }
             </div>
-    </>
+        </>
     )
 }
 

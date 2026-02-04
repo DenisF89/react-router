@@ -9,15 +9,15 @@ import Description from "../components/Description.jsx";
 
 export default function SingleProduct(){
     
-    //variabili di stato
-    const [product, setProduct] = useState({});
-    const [categoryProducts, setCategoryProducts] = useState([]);
-    const [open,setOpen] = useState(false);
-    const [error, setError] = useState('');
-    
-    //variabili di navigazione
-    const {id, category} = useParams();
+   //variabili di navigazione
+    const {id, category} = useParams();                             //salvo le variabili che mi passa l'indirizzo (parametri)
     const navigate = useNavigate();
+
+    //variabili di stato
+    const [product, setProduct] = useState({});                     //state da popolare con proprietà del prodotto con id uguale al parametro "id"
+    const [categoryProducts, setCategoryProducts] = useState([]);   //state da popolare con array di prodotti filtrati per il parametro "categoria"
+    const [open,setOpen] = useState(false);                         //state per visualizzare/nascondere descrizione lunga
+    const [error, setError] = useState('');                         //state per restituire una stringa in caso di errore di comunicazione api
 
     //indirizzi per recupero dati
     const idUrl = `https://fakestoreapi.com/products/${id}`;
@@ -25,15 +25,15 @@ export default function SingleProduct(){
 
     //chiama le api al caricamento useParams
     useEffect(()=>{
-        if(isNaN(id) || id<=0 || id>20)
-        return navigate("/prodotti");
-        getData(idUrl,setProduct,setError);
-        setOpen(false);
+        if(isNaN(id) || id<=0 || id>20)                 //se l'id non è valido
+        return navigate("/prodotti");                   //torna alla pagina prodotti
+        getData(idUrl,setProduct,setError);             //passo url, lo state da popolare ed eventuale errore
+        setOpen(false);                                 //chiuso evt. descrizione
         },[id])
 
     useEffect(()=>{
         if(!category) return;
-        getData(catUrl,setCategoryProducts,setError);
+        getData(catUrl,setCategoryProducts,setError);   //se esiste parametro categoria riempi array con tutti i prodotti della categoria
         },[category])
 
     

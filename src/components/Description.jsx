@@ -1,3 +1,6 @@
+//Componente che gestisce la lunghezza della descrizione del prodotto.
+//se supera i 160 caratteri viene spezzata e inserito un bottone toggle che visualizza e nasconde il resto del testo
+
 const Description = ({text,open,setOpen})=>{
     
         if(!text)return;

@@ -7,7 +7,6 @@ import { getData, nextProduct, prevProduct, converti } from "../functions/functi
 import Stars from "../components/Stars";
 import Description from "../components/Description.jsx";
 
-
 export default function SingleProduct(){
     
     //variabili di stato
@@ -27,12 +26,15 @@ export default function SingleProduct(){
     //chiama le api al caricamento useParams
     useEffect(()=>{
         if(isNaN(id) || id<=0 || id>20)
-        {navigate("/prodotti");}
-        else{
+        return navigate("/prodotti");
         getData(idUrl,setProduct,setError);
-        getData(catUrl,setCategoryProducts,setError);
         setOpen(false);
-    }},[id, category])
+        },[id])
+
+    useEffect(()=>{
+        if(!category) return;
+        getData(catUrl,setCategoryProducts,setError);
+        },[category])
 
     
     return (

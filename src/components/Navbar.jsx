@@ -1,4 +1,8 @@
 import { NavLink } from "react-router-dom";
+
+//La Navbar gestisce i link del menu principale con NavLink di React Router
+//se uno dei link corrisponde alla pagina correntem, gli viene dato classe active
+
 export default function Navbar() {
  return (
     <nav>

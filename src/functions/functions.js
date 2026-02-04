@@ -17,6 +17,7 @@ export const filtra = (value, setCategory) => {
 //naviga al prodotto successivo
 export const nextProduct = (id,category,categoryProducts,navigate) => {
         const index = categoryProducts.findIndex(p => p.id === Number(id));
+        if (index === -1) return navigate("/prodotti");
         if(category)
             {if (index < categoryProducts.length - 1) {
                 const nextId = categoryProducts[index + 1].id;
@@ -28,6 +29,7 @@ export const nextProduct = (id,category,categoryProducts,navigate) => {
 //naviga al prodotto precedente
 export const prevProduct = (id,category,categoryProducts,navigate) => {
     const index = categoryProducts.findIndex(p => p.id === Number(id));
+      if (index === -1) return navigate("/prodotti");
         if(category)
             {if (index > 0) {
                 const prevId = categoryProducts[index - 1].id;
@@ -36,7 +38,7 @@ export const prevProduct = (id,category,categoryProducts,navigate) => {
         }else{
             navigate(`/prodotti/${Number(id) - 1}`);
         }
-    }
+}
 
 //sintassi prezzo corretta
 export const converti= (value)=>{

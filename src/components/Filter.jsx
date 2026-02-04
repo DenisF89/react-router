@@ -1,5 +1,8 @@
 import { filtra } from "../functions/functions.js"
 
+
+//Stampa la Select per filtrare la categoria - funzione filtra da functions.js
+
 export default function Filter({category,setCategory,products}){
 
     const options = ["Tutti i prodotti",

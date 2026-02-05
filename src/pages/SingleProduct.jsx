@@ -18,6 +18,8 @@ export default function SingleProduct(){
     const [categoryProducts, setCategoryProducts] = useState([]);   //state da popolare con array di prodotti filtrati per il parametro "categoria"
     const [open,setOpen] = useState(false);                         //state per visualizzare/nascondere descrizione lunga
     const [error, setError] = useState('');                         //state per restituire una stringa in caso di errore di comunicazione api
+    const [arrow, setArrow] = useState({prev:true,next:true});      //state per visualizzare/nascondere frecce
+    const [currentIndex, setCurrentIndex] = useState(-1);           //indice attuale dell'id in categoryProducts
 
     //indirizzi per recupero dati
     const idUrl = `https://fakestoreapi.com/products/${id}`;
@@ -35,7 +37,26 @@ export default function SingleProduct(){
         if(!category) return;
         getData(catUrl,setCategoryProducts,setError);   //se esiste parametro categoria riempi array con tutti i prodotti della categoria
         },[category])
-
+    
+    //gestione visualizza arrow
+    useEffect(()=>{
+         if(categoryProducts.length)                                            //se l'array è popolato
+            {const index = categoryProducts.findIndex(p=>p.id === Number(id));  //trovo l'indice dell'oggetto che ha la proprietà id uguale all'id pagina
+            setCurrentIndex(index);                                                       
+            if (index === -1)                                                   //controllo che esista un id corrispondente (se non esiste l'indice è -1)
+                {navigate("/prodotti");}                                        //torna ai prodotti
+            if (categoryProducts.length === 1)                                  //se esiste solo un elemento nell'array
+                {setArrow({prev:false,next:false})}                             //nascondi entrambe le frecce
+            else if (index === 0)                                               //se è il primo elemento dell'array
+                {setArrow({prev:false,next:true})}                              //nascondi prev
+            else if (index === categoryProducts.length-1)                       //se è l'ultimo elemento dell'array
+                {setArrow({prev:true,next:false})}                              //nascondi next
+            else {setArrow({prev:true,next:true})}                              //altrimenti visualizza entrambe le frecce
+            }
+        else{   if(Number(id) === 1){setArrow({prev:false,next:true})}          //se l'id è 1 nascondi prev
+                else if (Number(id) === 20){setArrow({prev:true,next:false})}   //se l'id è 20 nascondi next
+                else {setArrow({prev:true,next:true})}                          //se no visualizza entrambi
+            }},[categoryProducts,id]);
     
     return (
             <>
@@ -49,8 +70,9 @@ export default function SingleProduct(){
                             </>:(<>
 
                     {/* NAV PRECEDENTE */}
-                    <button className="button" onClick={()=>prevProduct(id,category,categoryProducts,navigate)}>⬅</button>
-
+                    {//arrow.prev &&
+                    <button className="button" onClick={()=>prevProduct(id, category, categoryProducts, currentIndex, navigate)}>⬅</button>
+                    }
                     {/* SCHEDA PRODOTTO */}
                     <div className="product">
                         
@@ -76,8 +98,9 @@ export default function SingleProduct(){
                     </div> 
 
                     {/* NAV SUCCESSIVO */}
-                    <button className="button" onClick={()=>nextProduct(id,category,categoryProducts,navigate)}>➡</button>
-                    
+                    {//arrow.next &&
+                    <button className="button" onClick={()=>nextProduct(id, category, categoryProducts, currentIndex, navigate)}>➡</button>
+                    }
                     </>)}
                     
                 </div>

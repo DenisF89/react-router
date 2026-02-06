@@ -61,13 +61,18 @@ a {
   background-color: #767676;
 }
 
-nav{
-  margin:0px auto;
+.barra{
   display:flex;
-  gap:15px;
+  justify-content:space-between;
+  margin:0px auto;
   margin-bottom:40px;
   padding:30px 0 20px;
   border-bottom:1px solid #878787;
+}
+
+nav{
+  display:flex;
+  gap:15px;
 }
 
 .error{

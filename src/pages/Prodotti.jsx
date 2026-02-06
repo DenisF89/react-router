@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Card from "../components/Card";
 import Filter from "../components/Filter";
 import { getData } from "../functions/functions.js"
+import { useBudget } from '../contexts/BudgetContext';
 
 function Prodotti(){
 
@@ -9,11 +10,12 @@ function Prodotti(){
     const [products, setProducts] = useState([]);
     const [error, setError] = useState('');
     const [category, setCategory] = useState('');
+    const [budgetMode] = useBudget();
 
     const url = "https://fakestoreapi.com/products";
 
     //chiamata all'api
-    useEffect(()=>{getData(url, setProducts, setError)}, [])
+    useEffect(()=>{getData(url, setProducts, setError);}, [])
 
     return(
         <>
@@ -22,17 +24,21 @@ function Prodotti(){
                         setCategory={setCategory} 
                         products={products} 
                 />
+                
+            
 
             <div className="card_container">
-                {error!=""  ? <p className="error">{error}</p> 
-                            : (category ?products.filter(product => product.category === category)
-                                        :products
-                              )         .map((product) =>   <Card 
-                                                                key={product.id} 
-                                                                category={category} 
-                                                                product={product}  
-                                                            />
-                                        )
+                {error!=""? <p className="error">{error}</p> 
+                          : products
+                                    .filter(product => !category || product.category === category)  // se non esiste categoria non filtrare
+                                    .filter(product => !budgetMode || product.price <= 30)          // se budget non attivo non filtrare
+                                    .map(product => (
+                                                <Card
+                                                    key={product.id}
+                                                    category={category}
+                                                    product={product}
+                                                /> )
+                                    )
                 }
             </div>
         </>

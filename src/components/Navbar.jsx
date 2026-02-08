@@ -7,7 +7,7 @@ import { useBudget } from '../contexts/BudgetContext';
 
 export default function Navbar(){
 
-    const [budgetMode, setBudgetMode] = useBudget();
+    const {budgetMode, setBudgetMode, maxPrice, setMaxPrice} = useBudget();
     
     const location = useLocation();
 
@@ -26,10 +26,14 @@ export default function Navbar(){
            
             {
                 location.pathname === "/prodotti" && (
+                <div className="setbudget">
+                    <span>Prezzo massimo: €</span>
+                    <input name="maxPrice" type="number" step="0.1" value={maxPrice} onChange={(e)=>setMaxPrice(e.target.value)} />
                     <button className="button" name="Modalità Budget" onClick={myBudgetMode}>
                     {budgetMode ? "Disattiva" : "Attiva"} Modalità Budget
                     </button>
-                    )
+                </div>
+                )
             }
            
     </div>

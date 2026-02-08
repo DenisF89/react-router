@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'              //REACT ROUTER DOM - gestisce webapp multipagina con React
-import HomePage from './pages/Homepage'
+import HomePage from './pages/HomePage'
 import ChiSiamo from './pages/ChiSiamo'
 import Prodotti from './pages/Prodotti'
 import SingleProduct from './pages/SingleProduct'

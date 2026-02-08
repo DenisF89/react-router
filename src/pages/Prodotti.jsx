@@ -10,7 +10,7 @@ function Prodotti(){
     const [products, setProducts] = useState([]);
     const [error, setError] = useState('');
     const [category, setCategory] = useState('');
-    const [budgetMode] = useBudget();
+    const {budgetMode,maxPrice} = useBudget();
 
     const url = "https://fakestoreapi.com/products";
 
@@ -31,7 +31,7 @@ function Prodotti(){
                 {error!=""? <p className="error">{error}</p> 
                           : products
                                     .filter(product => !category || product.category === category)  // se non esiste categoria non filtrare
-                                    .filter(product => !budgetMode || product.price <= 30)          // se budget non attivo non filtrare
+                                    .filter(product => !budgetMode || product.price <= maxPrice)          // se budget non attivo non filtrare
                                     .map(product => (
                                                 <Card
                                                     key={product.id}

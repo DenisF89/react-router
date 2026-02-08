@@ -75,6 +75,15 @@ nav{
   gap:15px;
 }
 
+.setbudget{
+  display:flex;
+  gap:10px;
+  align-items:end;
+}
+.setbudget input{
+  width:5rem;
+}
+
 .error{
   color:yellow;
   font-size: 1.2em;

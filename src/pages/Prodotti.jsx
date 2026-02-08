@@ -31,7 +31,10 @@ function Prodotti(){
                 {error!=""? <p className="error">{error}</p> 
                           : products
                                     .filter(product => !category || product.category === category)  // se non esiste categoria non filtrare
-                                    .filter(product => !budgetMode || product.price <= maxPrice)          // se budget non attivo non filtrare
+                                    //versione input
+                                    .filter(product => !maxPrice || product.price <= maxPrice)  // se il prezzo massimo non è settato non filtrare
+                                    //versione booleano
+                                    //.filter(product => !budgetMode || product.price <= 30) // se budget non attivo non filtrare
                                     .map(product => (
                                                 <Card
                                                     key={product.id}

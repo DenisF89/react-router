@@ -6,8 +6,9 @@ const BudgetContext = createContext();
 function BudgetProvider({ children }) {
 
     // Aggiungiamo le varibili di stato che vogliamo condividere
+
     const [budgetMode, setBudgetMode] = useState(false);
-    const [maxPrice, setMaxPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(null);
 
     return (
         <BudgetContext.Provider 

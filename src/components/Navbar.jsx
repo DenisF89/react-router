@@ -7,12 +7,20 @@ import { useBudget } from '../contexts/BudgetContext';
 
 export default function Navbar(){
 
-    const {budgetMode, setBudgetMode, maxPrice, setMaxPrice} = useBudget();
+    const {maxPrice, setMaxPrice , budgetMode, setBudgetMode } = useBudget();
     
     const location = useLocation();
 
-    const myBudgetMode = ()=>{
+    //Versione booleano
+    /* const myBudgetMode = ()=>{
         setBudgetMode(bm=>!bm)
+    }  */
+
+    //Versione input
+    const myPrice = (e)=>{
+        let value = e.target.value;
+        if (value <= 0){value=""};
+        setMaxPrice(value);
     }
 
     return (
@@ -27,11 +35,15 @@ export default function Navbar(){
             {
                 location.pathname === "/prodotti" && (
                 <div className="setbudget">
+                    {/* versione input */}
                     <span>Prezzo massimo: €</span>
-                    <input name="maxPrice" type="number" step="0.1" value={maxPrice} onChange={(e)=>setMaxPrice(e.target.value)} />
-                    <button className="button" name="Modalità Budget" onClick={myBudgetMode}>
-                    {budgetMode ? "Disattiva" : "Attiva"} Modalità Budget
-                    </button>
+                    <input name="maxPrice" type="number" step="10" value={String(maxPrice)} onChange={myPrice} />
+                    
+                    {/* versione booleano */}
+                    {/* <button className="button" name="Modalità Budget" onClick={myBudgetMode}>
+                    {budgetMode ? "Disattiva" : "Attiva"} Modalità Budget 
+                    </button>*/}
+
                 </div>
                 )
             }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Filter from "../components/Filter";
 import { getData } from "../functions/functions.js"

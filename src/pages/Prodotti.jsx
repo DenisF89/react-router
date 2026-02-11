@@ -3,11 +3,12 @@ import Card from "../components/Card";
 import Filter from "../components/Filter";
 import { getData } from "../functions/functions.js"
 import { useBudget } from '../contexts/BudgetContext';
+import { useShop } from '../contexts/ShopContext';
 
 function Prodotti(){
 
     //dichiarazioni variabili
-    const [products, setProducts] = useState([]);
+    const {products, setProducts} = useShop();
     const [error, setError] = useState('');
     const [category, setCategory] = useState('');
     const {budgetMode,maxPrice} = useBudget();

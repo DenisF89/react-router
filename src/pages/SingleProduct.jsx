@@ -1,6 +1,7 @@
 //hooks
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useShop } from "../contexts/ShopContext.jsx";
 //funzioni
 import { getData, nextProduct, prevProduct, converti } from "../functions/functions.js";
 //componenti
@@ -20,6 +21,7 @@ export default function SingleProduct(){
     const [error, setError] = useState('');                         //state per restituire una stringa in caso di errore di comunicazione api
     const [arrow, setArrow] = useState({prev:true,next:true});      //state per visualizzare/nascondere frecce
     const [currentIndex, setCurrentIndex] = useState(-1);           //indice attuale dell'id in categoryProducts
+    const { setCart } = useShop();
 
     //indirizzi per recupero dati
     const idUrl = `https://fakestoreapi.com/products/${id}`;
@@ -58,6 +60,17 @@ export default function SingleProduct(){
                 else {setArrow({prev:true,next:true})}                          //se no visualizza entrambi
             }},[categoryProducts,id]);
     
+    const addtoCart = (e)=>{
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const id = Number(data.get("id"));
+    const count = Number(data.get("count"));
+    setCart(cart => ({...cart, [id]:(cart[id]??0)+count}));
+    //setCart(cart => ({...cart, [item]:count}));
+    alert(count+(count==1?" articolo aggiunto":" articoli aggiunti")+" al carrello")
+    e.target.reset();
+    }
+
     return (
             <>
                 {category && (<h2>Filtro: {category.toUpperCase()}</h2>)}
@@ -70,7 +83,7 @@ export default function SingleProduct(){
                             </>:(<>
 
                     {/* NAV PRECEDENTE */}
-                    {//arrow.prev &&
+                    {arrow.prev &&
                     <button className="button" onClick={()=>prevProduct(id, category, categoryProducts, currentIndex, navigate)}>⬅</button>
                     }
                     {/* SCHEDA PRODOTTO */}
@@ -93,12 +106,18 @@ export default function SingleProduct(){
                             
                             <p>{product.rating?.count} recensioni</p>
 
+                            <form onSubmit={addtoCart}>
+                                <input type="hidden" name="id" value={product?.id ?? ""} />
+                                <button type="submit">Aggiungi al carrello</button>
+                                <input name="count" type="number" min="1" max="9" defaultValue="1" />
+                            </form>
+
                         </div> 
 
                     </div> 
 
                     {/* NAV SUCCESSIVO */}
-                    {//arrow.next &&
+                    {arrow.next &&
                     <button className="button" onClick={()=>nextProduct(id, category, categoryProducts, currentIndex, navigate)}>➡</button>
                     }
                     </>)}

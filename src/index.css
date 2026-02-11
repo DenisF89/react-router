@@ -100,12 +100,14 @@ nav{
 }
 
 .card{
+  position:relative;
   max-width:230px;
   max-height:400px;
   border:1px solid #ccc;
   border-radius:8px;
   padding:20px;
   background-color: #cccccc49;
+  overflow:hidden;
 }
 .card:hover{
   background-color: rgba(255, 255, 255, 0.521);
@@ -147,6 +149,43 @@ nav{
   font-size:1.4em;
   font-weight:700;
   margin-top:10px;
+}
+
+.addtocart{
+  width:300px;
+  background-color:#1a1a1a;
+  display:flex;
+  gap:2px;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  bottom:-35px;
+  left:-20px;
+  z-index:1;
+  height:35px;
+  transition: bottom 0.3s ease;
+}
+
+.card:hover .addtocart {
+  bottom: 0; 
+}
+
+
+.addtocart input{
+  width:30px;
+  height:20px;
+  background-color:transparent;
+  border:none;
+  outline: none;
+}
+
+.addtocart button{
+  width:150px;
+  overflow:hidden;
+  font-size:1em;
+  background-color:transparent;
+  border:none;
+  cursor:pointer;
 }
 
 /*----------------------------------  PRODUCT  -----------------------------*/
@@ -197,6 +236,7 @@ nav{
   min-width: 0;
   height: 100%;
   overflow:hidden;
+  position:relative;
 }
 
 .yellow{
@@ -216,3 +256,116 @@ nav{
   max-height: none;
   overflow: hidden;
 }
+
+/*----------------------------------  CART  -----------------------------*/
+
+.flex{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.count{
+  font-size:2rem;
+}
+
+
+.cart-container{
+  max-width:1000px;
+  margin:0 auto;
+  gap:10px;
+  display:flex;
+  flex-direction:column;
+}
+
+.cart-product{
+  width:1000px;
+  height:auto;
+  display: flex;
+  border:1px solid #ccc;
+  border-radius:8px;
+  justify-content:space-around;
+  align-items:center;
+  overflow: hidden;
+  padding: 20px;
+  position:relative;
+}
+
+.cart-image{
+  width:200px;
+  height:200px;
+  margin-top:10px;
+}
+
+.cart-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display: block;
+} 
+
+.cart-info{
+  width:350px;
+  text-align:left;
+  min-width: 0;
+  height: 100%;
+  overflow:hidden;
+}
+
+.cart-total{
+  align-self:start;
+}  
+
+.cart-delete{
+  position:absolute;
+  top:0; right:0px;
+  font-size:1.5em;
+  cursor:pointer;
+}
+
+/* ---------------- TABLE ---------------- */
+
+.cart-total table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.95rem;
+  margin-top:10px;
+}
+
+.cart-total thead th{
+  text-align:left;
+  padding:10px;
+  border-bottom:1px solid #555;
+  font-weight:600;
+}
+
+.cart-total tbody td{
+  padding:10px;
+  border-bottom:1px solid #444;
+}
+
+.cart-total tbody tr:last-child td{
+  border-bottom:none;
+}
+
+/* allineo i numeri a destra */
+.cart-total td:nth-child(2),
+.cart-total td:nth-child(3),
+.cart-total td:nth-child(4){
+  text-align:right;
+  white-space:nowrap;
+}
+
+.cart-total tfoot th,
+.cart-total tfoot td{
+  padding:12px 10px;
+  border-top:1px solid #777;
+  font-weight:700;
+}
+
+.cart-total tfoot td{
+  text-align:right;
+  white-space:nowrap;
+  font-size:1.05rem;
+}
+
+

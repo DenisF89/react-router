@@ -9,10 +9,11 @@ function BudgetProvider({ children }) {
 
     const [budgetMode, setBudgetMode] = useState(false);
     const [maxPrice, setMaxPrice] = useState(null);
+    const [cart, setCart] = useState([])
 
     return (
         <BudgetContext.Provider 
-            value={{budgetMode, setBudgetMode, maxPrice, setMaxPrice}}
+            value={{budgetMode, setBudgetMode, maxPrice, setMaxPrice, cart, setCart}}
         >
         {children}
         </BudgetContext.Provider>
